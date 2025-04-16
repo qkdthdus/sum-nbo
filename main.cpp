@@ -5,17 +5,19 @@
 
 
 int main(int argc, char*argv[]) {
-    uint32_t result=0;
 
     if(argc<2){
         printf("Usage: %s<file1> <file2>...\n",argv[0]);
         return 1;
     }
 
+    uint32_t result=0;
+
     //error handling & calc
-    for(int i=1; i<argc;i++){
-        FILE*file=fopen(argv[i],"rb");
-        if(file==NULL){
+    for(int i = 1 ; i<argc ; i++){
+        FILE*file=fopen(argv[i], "rb");
+
+        if(file==NULL){ //use null pointer
             printf("Error %s\n", argv[i]);
             return 1;
         }
@@ -27,6 +29,7 @@ int main(int argc, char*argv[]) {
             fclose(file);
             return 1;
         }
+
         fclose(file);
 
         //after pass the error correction
@@ -43,5 +46,5 @@ int main(int argc, char*argv[]) {
     //print result
     printf(" = %u(0x%08x)",result, result);
 
-    return 0;
+    //return 0;
 }
