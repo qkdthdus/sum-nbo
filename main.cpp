@@ -3,9 +3,6 @@
 #include <stdio.h> // for printf
 #include <netinet/in.h> // for htons, htonl
 
-void Cal_files() {
-
-}
 
 int main(int argc, char*argv[]) {
     uint32_t result=0;
@@ -15,6 +12,7 @@ int main(int argc, char*argv[]) {
         return 1;
     }
 
+    //error handling & calc
     for(int i=1; i<argc;i++){
         FILE*file=fopen(argv[i],"rb");
         if(file==NULL){
@@ -25,12 +23,13 @@ int main(int argc, char*argv[]) {
         uint32_t num;
         size_t byte_num=fread(&num,1,sizeof(uint32_t),file);
         if(byte_num != sizeof(uint32_t)){
-            printf("Error: %s is not long enough", argv[i]);
+            printf("%s: not long enough", argv[i]);
             fclose(file);
             return 1;
         }
         fclose(file);
 
+        //after pass the error correction
         uint32_t oper=ntohl(num);
         printf("%u(0x%08x)", oper, oper);
 
@@ -41,6 +40,7 @@ int main(int argc, char*argv[]) {
 
     }
 
+    //print result
     printf(" = %u(0x%08x)",result, result);
 
     return 0;
